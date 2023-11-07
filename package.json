@@ -1,0 +1,22 @@
+{
+  "name": "mcdiscordbot",
+  "version": "1.0.0",
+  "description": "Hello Discord Bots World",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/samotyja/MCdiscordBot.git"
+  },
+  "author": "Jakub Samotyja",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/samotyja/MCdiscordBot/issues"
+  },
+  "homepage": "https://github.com/samotyja/MCdiscordBot#readme",
+  "dependencies": {
+    "discord.js": "^14.12.1"
+  }
+}
