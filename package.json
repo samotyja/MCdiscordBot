@@ -18,5 +18,8 @@
   "homepage": "https://github.com/samotyja/MCdiscordBot#readme",
   "dependencies": {
     "discord.js": "^14.12.1"
+  },
+  "devDependencies": {
+    "eslint": "^8.53.0"
   }
 }
