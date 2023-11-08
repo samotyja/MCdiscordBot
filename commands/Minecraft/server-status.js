@@ -17,7 +17,7 @@ module.exports = {
 			.then((result) => {
 				const exampleEmbed = new EmbedBuilder()
 					.setColor(0x0099FF)
-					.setTitle('Status Serwera')
+					.setTitle('Status Serwera: ONLINE! ✅')
 					.setThumbnail('https://i.imgur.com/AfFp7pu.png')
 					.addFields(
 						{ name: 'Ilość graczy online:', value: `${result.players.online}/${result.players.max}` },
@@ -28,6 +28,15 @@ module.exports = {
 				console.log(result);
 				interaction.reply({ embeds: [exampleEmbed] });
 			})
-			.catch((error) => console.error(error));
+			.catch((error) => {
+				const exampleEmbed = new EmbedBuilder()
+					.setColor(0x0099FF)
+					.setTitle('Status Serwera: OFFLINE! 🔴🔴🔴')
+					.setThumbnail('https://i.imgur.com/AfFp7pu.png')
+					.setDescription('Zażalenia kierować proszę do Admina')
+					.setTimestamp();
+				console.log(error);
+				interaction.reply({ embeds: [exampleEmbed] });
+			});
 	},
 };
