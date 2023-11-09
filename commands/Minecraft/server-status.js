@@ -34,7 +34,7 @@ module.exports = {
 						{ name: 'Wersja:', value: `${result.version.name}` },
 					)
 					.setTimestamp();
-				interaction.reply({ embeds: [exampleEmbed], files: [sfattach] });
+				interaction.reply({ embeds: [exampleEmbed], files: [sfattach], ephemeral: true });
 			})
 			.catch((error) => {
 				const exampleEmbed = new EmbedBuilder()
@@ -64,7 +64,7 @@ module.exports = {
 							{ name: 'Online:', value: `${playersList}` },
 						)
 						.setTimestamp();
-					interaction.followUp({ embeds: [exampleEmbed] });
+					interaction.followUp({ embeds: [exampleEmbed], ephemeral: true });
 				}
 			})
 			.catch((error) => console.error(error));
