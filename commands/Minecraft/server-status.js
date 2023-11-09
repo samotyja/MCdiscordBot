@@ -2,17 +2,25 @@ const util = require('mc-server-utilities');
 const { SlashCommandBuilder } = require('discord.js');
 const { EmbedBuilder, AttachmentBuilder } = require('discord.js');
 const { serverPort, serverIp } = require('../../server-config.json');
-const options = {
+const wait = require('node:timers/promises').setTimeout;
+
+const optionsJava = {
 	timeout: 1000 * 5,
+	enableSRV: true,
+};
+
+const optionsQuery = {
+	sessionID: 1,
 	enableSRV: true,
 };
 
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('status')
-		.setDescription('Udostępnia informację o statusie serwera (NOWAY) i o ilości osób online'),
+		.setDescription('Zwraca status serwera (NOWAY) oraz listę graczy online'),
+
 	async execute(interaction) {
-		await util.status(serverIp, Number(serverPort), options)
+		await util.status(serverIp, Number(serverPort), optionsJava)
 			.then((result) => {
 				const sfbuff = new Buffer.from(result.favicon.split(',')[1], 'base64');
 				const sfattach = new AttachmentBuilder(sfbuff, { name: 'server-icon.png' });
@@ -38,5 +46,27 @@ module.exports = {
 				console.log(error);
 				interaction.reply({ embeds: [exampleEmbed] });
 			});
+
+		await wait(500);
+
+		await util.queryFull(serverIp, Number(serverPort), optionsQuery)
+			.then((result) => {
+				if (result.players.list.length > 0) {
+					let playersList = '';
+					for (const player of result.players.list) {
+						playersList += player + ', ';
+					}
+
+					const exampleEmbed = new EmbedBuilder()
+						.setColor(0x0099FF)
+						.setTitle('Lista graczy:')
+						.addFields(
+							{ name: 'Online:', value: `${playersList}` },
+						)
+						.setTimestamp();
+					interaction.followUp({ embeds: [exampleEmbed] });
+				}
+			})
+			.catch((error) => console.error(error));
 	},
 };
