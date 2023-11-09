@@ -1,8 +1,7 @@
-const { SlashCommandBuilder } = require('discord.js');
 const util = require('mc-server-utilities');
-const { EmbedBuilder } = require('discord.js');
+const { SlashCommandBuilder } = require('discord.js');
+const { EmbedBuilder, AttachmentBuilder } = require('discord.js');
 const { serverPort, serverIp } = require('../../server-config.json');
-console.log();
 const options = {
 	timeout: 1000 * 5,
 	enableSRV: true,
@@ -15,24 +14,25 @@ module.exports = {
 	async execute(interaction) {
 		await util.status(serverIp, Number(serverPort), options)
 			.then((result) => {
+				const sfbuff = new Buffer.from(result.favicon.split(',')[1], 'base64');
+				const sfattach = new AttachmentBuilder(sfbuff, { name: 'server-icon.png' });
 				const exampleEmbed = new EmbedBuilder()
 					.setColor(0x0099FF)
 					.setTitle('Status Serwera: ONLINE! ✅')
-					.setThumbnail('https://i.imgur.com/AfFp7pu.png')
+					.setThumbnail('attachment://server-icon.png')
 					.addFields(
+						{ name: 'Opis Serwera: ', value: `${result.motd.clean}` },
 						{ name: 'Ilość graczy online:', value: `${result.players.online}/${result.players.max}` },
 						{ name: 'Wersja:', value: `${result.version.name}` },
-						{ name: 'Opis Serwera: ', value: `${result.motd.clean}` },
 					)
 					.setTimestamp();
-				console.log(result);
-				interaction.reply({ embeds: [exampleEmbed] });
+				interaction.reply({ embeds: [exampleEmbed], files: [sfattach] });
 			})
 			.catch((error) => {
 				const exampleEmbed = new EmbedBuilder()
 					.setColor(0x0099FF)
 					.setTitle('Status Serwera: OFFLINE! 🔴🔴🔴')
-					.setThumbnail('https://i.imgur.com/AfFp7pu.png')
+					.setThumbnail('https://media3.giphy.com/media/P53TSsopKicrm/200w.gif?cid=6c09b952rnsi8yk1j53wwaqj4n8mntnr2w7rcw15stywln6h&ep=v1_gifs_search&rid=200w.gif&ct=g')
 					.setDescription('Zażalenia kierować proszę do Admina')
 					.setTimestamp();
 				console.log(error);
