@@ -47,14 +47,14 @@ module.exports = {
 				interaction.reply({ embeds: [exampleEmbed] });
 			});
 
-		await wait(500);
+		await wait(2000);
 
 		await util.queryFull(serverIp, Number(serverPort), optionsQuery)
 			.then((result) => {
 				if (result.players.list.length > 0) {
 					let playersList = '';
 					for (const player of result.players.list) {
-						playersList += player + ', ';
+						playersList += player + ' ';
 					}
 
 					const exampleEmbed = new EmbedBuilder()
