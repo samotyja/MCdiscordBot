@@ -20,6 +20,7 @@ module.exports = {
 
 	async execute(interaction) {
 		console.log(`command '${interaction.commandName}' awakened by ${interaction.user.globalName}`);
+		await interaction.deferReply({ ephemeral: true });
 		await util.status(serverIp, serverPort, optionsJava)
 			.then((result) => {
 				const sfbuff = new Buffer.from(result.favicon.split(',')[1], 'base64');
@@ -34,7 +35,7 @@ module.exports = {
 						{ name: 'Wersja:', value: `${result.version.name}` },
 					)
 					.setTimestamp();
-				return interaction.reply({ embeds: [exampleEmbed], files: [sfattach], ephemeral: true });
+				return interaction.editReply({ embeds: [exampleEmbed], files: [sfattach], ephemeral: true });
 			})
 			.catch((error) => {
 				const exampleEmbed = new EmbedBuilder()
@@ -44,7 +45,7 @@ module.exports = {
 					.setDescription('Zażalenia kierować proszę do Admina')
 					.setTimestamp();
 				console.log(`error durning JAVA status check ${error}`);
-				return interaction.reply({ embeds: [exampleEmbed], ephemeral: true });
+				return interaction.ediyReply({ embeds: [exampleEmbed], ephemeral: true });
 			});
 
 		await util.queryFull(serverIp, Number(serverPort), optionsQuery)
@@ -63,6 +64,9 @@ module.exports = {
 						)
 						.setTimestamp();
 					return interaction.followUp({ embeds: [exampleEmbed], ephemeral: true });
+				}
+				else {
+					return;
 				}
 			})
 			.catch((error) => console.error(`error durning QUERY status check ${error}`));
