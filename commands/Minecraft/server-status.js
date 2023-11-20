@@ -19,8 +19,8 @@ module.exports = {
 		.setDescription('Zwraca status serwera oraz listę graczy online'),
 
 	async execute(interaction) {
-		console.log(`interaction awakened by ${interaction.user.globalName}`);
-		await util.status(serverIp, Number(serverPort), optionsJava)
+		console.log(`command '${interaction.commandName}' awakened by ${interaction.user.globalName}`);
+		await util.status(serverIp, serverPort, optionsJava)
 			.then((result) => {
 				const sfbuff = new Buffer.from(result.favicon.split(',')[1], 'base64');
 				const sfattach = new AttachmentBuilder(sfbuff, { name: 'server-icon.png' });
