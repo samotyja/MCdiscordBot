@@ -45,7 +45,7 @@ module.exports = {
 					.setDescription('Zażalenia kierować proszę do Admina')
 					.setTimestamp();
 				console.log(`error durning JAVA status check ${error}`);
-				return interaction.ediyReply({ embeds: [exampleEmbed], ephemeral: true });
+				return interaction.editReply({ embeds: [exampleEmbed], ephemeral: true });
 			});
 
 		await util.queryFull(serverIp, Number(serverPort), optionsQuery)

@@ -20,12 +20,13 @@ module.exports = {
 
 	async execute(interaction) {
 		console.log(`command '${interaction.commandName}' awakened by ${interaction.user.globalName}`);
+		await interaction.deferReply({ ephemeral: true });
 		const msg = interaction.options.getString('wiadomość') ?? 'Nie podano wiadomości';
 		await client.connect(serverIp, rconPort, options);
 		await client.login(rconPassword);
 		await client.execute(`/say ${interaction.user.globalName}: ${msg}`);
 		await client.close();
-		await interaction.reply({ content: `Wiadomość o treści "${msg}" została wysłana na serwer`, ephemeral: true });
+		await interaction.editReply({ content: `Wiadomość o treści "${msg}" została wysłana na serwer`, ephemeral: true });
 	},
 
 };

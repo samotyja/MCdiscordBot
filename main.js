@@ -40,4 +40,8 @@ for (const file of eventFiles) {
 	}
 }
 
+process.on('unhandledRejection', error => {
+	console.error('Unhandled promise rejection:', error);
+});
+
 client.login(token);
