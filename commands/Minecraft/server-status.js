@@ -25,7 +25,7 @@ module.exports = {
 		if (responseJson.online) {
 			const sfbuff = new Buffer.from(responseJson.icon.split(',')[1], 'base64');
 			const sfattach = new AttachmentBuilder(sfbuff, { name: 'server-icon.png' });
-			const exampleEmbed = new EmbedBuilder()
+			const serverInfoEmbed = new EmbedBuilder()
 				.setColor(0x0099FF)
 				.setTitle('Status Serwera: ONLINE! ✅')
 				.setThumbnail('attachment://server-icon.png')
@@ -41,21 +41,20 @@ module.exports = {
 				for (let index = 0; index < responseJson.players.list.length; index++) {
 					players += responseJson.players.list[index].name_clean + ', ';
 				}
-				exampleEmbed.setTitle('Lista graczy:');
-				exampleEmbed.addFields(
-					{ name: 'Online:', value: `${players}` },
+				serverInfoEmbed.addFields(
+					{ name: 'Lista graczy:', value: `${players}` },
 				);
 			}
-			return interaction.editReply({ embeds: [exampleEmbed], files: [sfattach], ephemeral: true });
+			return interaction.editReply({ embeds: [serverInfoEmbed], files: [sfattach], ephemeral: true });
 		}
 		else {
-			const exampleEmbed = new EmbedBuilder()
+			const serverInfoEmbed = new EmbedBuilder()
 				.setColor(0x0099FF)
 				.setTitle('Status Serwera: OFFLINE! 🔴🔴🔴')
 				.setThumbnail('https://media3.giphy.com/media/P53TSsopKicrm/200w.gif?cid=6c09b952rnsi8yk1j53wwaqj4n8mntnr2w7rcw15stywln6h&ep=v1_gifs_search&rid=200w.gif&ct=g')
 				.setDescription('Zażalenia kierować proszę do Admina')
 				.setTimestamp();
-			return interaction.editReply({ embeds: [exampleEmbed], ephemeral: true });
+			return interaction.editReply({ embeds: [serverInfoEmbed], ephemeral: true });
 		}
 	},
 };
