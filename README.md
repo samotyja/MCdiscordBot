@@ -8,7 +8,7 @@ BOT can display information about the server status (current online players, pla
 ## Instalation
 It was made for my own small server, so it does not have any more advanced features, and all information like server ip, port ect. has to be hardcoded into a separate JSON file.
 
-U need to create 2 .json files like this:
+You need to create 2 .json files like this:
 
 config.json
 {
